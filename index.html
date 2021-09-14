@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Тестовое задание</title>
+
+<!-- ===== style sheets ===== -->
+<style>
+* { margin: 0; padding: 0; }
+
+.container {
+  width: 200px;
+  margin: 100px auto auto auto;
+  position: relative;
+  display : flex;
+  flex-wrap: wrap;
+  /* задаем глубину сцене */
+  -webkit-perspective: 600px; /* webkit */
+  -moz-perspective: 600px; /* mozilla */
+  -ms-perspective: 600px; /* IE 10 */
+  -o-perspective: 600px; /* opera когда-то тоже должна начать понимать */
+  perspective: 600px;	/* св-во по стандатам */
+}
+
+.card { /* поворачивать будем общий контейнер */
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid blue;
+  box-sizing: border-box;
+
+}
+.container.flip   .card {	/* добавляя этот класс, поворачивеам контейнер на 180 градусов */
+  -webkit-transform: rotateX( 180deg );
+  -moz-transform: rotateX( 180deg );
+  -ms-transform: rotateX( 180deg );
+  -o-transform: rotateX( 180deg );
+  transform: rotateX( 180deg );
+
+}
+
+
+textarea, input{
+	
+	width: 100%;
+	resize: none;
+}
+
+</style>
+
+   <script>
+window.addEventListener("DOMContentLoaded", function() {  // на окно вешаем слушатель события, при загрузке контента будет выполняться функция.
+    var button = document.getElementById("button"),  //объявляем переменные, кнопку, текстовое поле, контейнер с картами и сам массив кард.
+        textarea = document.getElementsByTagName("textarea")[0],
+        element = document.querySelector(".container"),
+        card = document.querySelectorAll(".card"); 
+        [].forEach.call( card, function(child, i) { //функция которая для выполнения действий над каждым дочерним эллементом массива card
+        child.textContent = ++i; //нумерация дивов, сколько бы их не добавил пользователь, у каждого нового дива будет свой правильный номер
+        var delay = i * 0.2; //переменная задержки вращения следущего блока
+        child.style.webkitTransitionDelay = delay + "s"; //для движка вебкит, поворачиваем блок, дописываем строку S что бы браузер понял еденицу измерения
+        child.style.transitionDelay = delay + "s"; //поворачиваем блок в остальных браузерах, дописываем строку S что бы браузер понял еденицу измерения
+        var duration = "2s"  //Время порворота блока, переменная 
+        child.style.webkitTransitionDuration = duration ; //указываем время поворота блока для движка веб кит
+        child.style.transitionDuration = duration ; //указываем время поворота блока для остальных браузеров 
+        });
+   button.addEventListener("click", function() { //слушатель события по нажатию кнопки выполняет функцию
+        button.value = "в процессе"; //кнопка меняет свой текст
+        textarea.value += "\nНачало процесса"; //в тестовое поле добавляется строка
+        element.classList.toggle("flip") //по нажатию кнопки поворачиваем контейнер на 180 градусов как указано в ксс с помощью добавления класса флип, повторное нажатие удалит класс
+    });
+    var n = 0; //переменная для счетчика 
+    function showMessage() { //функция для логирования состояния карт
+        textarea.value += "\nКонец процесса " + (n+1); //добавляем эту строку после того как карта будет перевернута 
+        n = ++n %  card.length; //как только остаток от деления счетчика увеличенного на еденицу поделенного на длинну массива станет равен 1
+        if(!n) {button.value = "пуск"; textarea.value += "\nКонец всех процессов";} //поменяем названием кнопки на "пуск"
+    }
+
+    element.addEventListener("transitionend", showMessage, false) //слушатель события который висит на каждом элементе контейнера с картами, при окончании движения он вызывает функцию showmessage 
+}, false);
+</script>
+
+
+
+</head>
+
+<body>
+
+<div class="container" id="container">
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<div class="card">
+
+</div>
+<input type="button" value="пуск" id="button" /><br>
+<textarea name="" rows="30"  ></textarea>
+
+</div>
+
+
+</body>
+
+</html>
